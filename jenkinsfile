@@ -1,0 +1,66 @@
+def buildResults = [:]
+
+void nofify_email(Map results) {
+    echo "TEST SIMULATE notify: ${results.toString()}"
+}
+
+pipeline {
+   agent any
+    options {
+        disableConcurrentBuilds()
+    }
+   stages {
+      
+        stage("Git Clone") {
+             steps {
+            git branch: 'main',
+            credentialsId: "066418de-52cd-429e-acab-003e2b2971a4",
+            url: 'https://github.com/dimash-tr/gitTest.git'
+
+            } 
+            } 
+        stage('Hello') {
+         steps {
+                script {
+                    def jobBuild = build job: 'CodeValue-TrigerTest', propagate: false
+
+                    def jobResult = jobBuild.getResult()
+
+                    echo "Build of 'testJob' returned result: ${jobResult}"
+
+                    buildResults['testJob'] = jobResult
+
+                    if (jobResult != 'SUCCESS') {
+                        error("testJob failed with result: ${jobResult}")
+                    }
+                }
+         }
+      }
+      
+      stage('Sleep') {
+         steps {
+            println 'Sleep 30Sec'
+            sleep 30
+         }
+      }
+
+   }
+   post {
+
+        always {
+            echo "Build results: ${buildResults.toString()}"
+        }
+
+        success {
+            echo "All builds completed OK"
+        }
+
+        failure {
+            echo "A job failed"
+
+            script {
+                nofify_email(buildResults)
+            }
+        }
+    }
+}
