@@ -11,11 +11,11 @@ pipeline {
     }
    stages {
       
-        stage("Git Clone") {
-             steps {
-                sh 'git merge Staging'
-            } 
-            } 
+        // stage("Git Clone") {
+        //      steps {
+        //         sh 'git merge Staging'
+        //     } 
+        //     } 
         stage('Hello') {
          steps {
                 script {
