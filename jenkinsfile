@@ -13,10 +13,7 @@ pipeline {
       
         stage("Git Clone") {
              steps {
-            git branch: 'main',
-            credentialsId: "066418de-52cd-429e-acab-003e2b2971a4",
-            url: 'https://github.com/dimash-tr/gitTest.git'
-
+                sh 'git merge Staging'
             } 
             } 
         stage('Hello') {
