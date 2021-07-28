@@ -19,7 +19,7 @@ pipeline {
         stage('Hello') {
          steps {
             script {
-                    cd
+                    sh "cd"
                     sh "./test.sh"    
                     //sh "./scripts/uploadapp.sh $KUSERNAME $KAPIKEY $APPNAME $APPPATH_IOS $APPID"  
                     kobiton_IOSid =  sh (script: 'cat id.dat', returnStdout: true).trim()
