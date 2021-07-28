@@ -19,6 +19,7 @@ pipeline {
         stage('Hello') {
          steps {
             script {
+                    sh "chmod +x -R ${env.WORKSPACE}"
                     sh "ls"
                     sh "./test.sh"    
                     //sh "./scripts/uploadapp.sh $KUSERNAME $KAPIKEY $APPNAME $APPPATH_IOS $APPID"  
