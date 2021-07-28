@@ -18,14 +18,14 @@ pipeline {
         //     } 
         stage('Hello') {
          steps {
-                script {
-                             sh "test.sh"    
-                            //sh "./scripts/uploadapp.sh $KUSERNAME $KAPIKEY $APPNAME $APPPATH_IOS $APPID"  
-                            kobiton_IOSid =  sh (script: 'cat id.dat', returnStdout: true).trim()
-                            iosName = "kobiton-store:v${kobiton_IOSid}"
-                    }
+            script {
+                    sh "test.sh"    
+                    //sh "./scripts/uploadapp.sh $KUSERNAME $KAPIKEY $APPNAME $APPPATH_IOS $APPID"  
+                    kobiton_IOSid =  sh (script: 'cat id.dat', returnStdout: true).trim()
+                    iosName = "kobiton-store:v${kobiton_IOSid}"
                 }
-         }
+            }
+        
       }
       
       stage('Sleep') {
@@ -35,23 +35,5 @@ pipeline {
          }
       }
 
-   }
-   post {
-
-        always {
-            echo "Build results: ${buildResults.toString()}"
-        }
-
-        success {
-            echo "All builds completed OK"
-        }
-
-        failure {
-            echo "A job failed"
-
-            script {
-                nofify_email(buildResults)
-            }
-        }
-    }
+   }   
 }
