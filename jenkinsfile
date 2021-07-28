@@ -20,7 +20,7 @@ pipeline {
          steps {
             script {
                     sh "ls"
-                    sh "./test.sh"    
+                    sh "sudo ./test.sh"    
                     //sh "./scripts/uploadapp.sh $KUSERNAME $KAPIKEY $APPNAME $APPPATH_IOS $APPID"  
                     kobiton_IOSid =  sh (script: 'cat id.dat', returnStdout: true).trim()
                     iosName = "kobiton-store:v${kobiton_IOSid}"
