@@ -19,16 +19,10 @@ pipeline {
         stage('Hello') {
          steps {
                 script {
-                    def jobBuild = build job: 'CodeValue-TrigerTest', propagate: false
-
-                    def jobResult = jobBuild.getResult()
-
-                    echo "Build of 'testJob' returned result: ${jobResult}"
-
-                    buildResults['testJob'] = jobResult
-
-                    if (jobResult != 'SUCCESS') {
-                        error("testJob failed with result: ${jobResult}")
+                             sh "test.sh"    
+                            //sh "./scripts/uploadapp.sh $KUSERNAME $KAPIKEY $APPNAME $APPPATH_IOS $APPID"  
+                            kobiton_IOSid =  sh (script: 'cat id.dat', returnStdout: true).trim()
+                            iosName = "kobiton-store:v${kobiton_IOSid}"
                     }
                 }
          }
